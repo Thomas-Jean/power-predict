@@ -14,5 +14,7 @@ sums = df.groupby(by=df['Datetime'].dt.date).sum().reset_index()
 print(list(sums.columns.values))
 print(sums.head())
 
+sums = sums.rename(columns={ 'Datetime': 'Date'})
+
 sums.to_csv('./data/dayton_daily.csv', index=False)
 
