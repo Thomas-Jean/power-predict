@@ -1,20 +1,26 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+import pickle
+import datetime
+
+from fastapi import FastAPI
 from fbprophet import Prophet
 
+app = FastAPI()
 
-df = pd.read_csv('./example_air_passengers.csv')
-print(df.head())
+pkl_path = "src/model/dayton_power_model.pkl"
+with open(pkl_path, "rb") as file:
+    model = pickle.load(file)
 
 
-m = Prophet()
-m.fit(df)
+def map_prediction(df):
+	predictions = []
+	for row in df.itertuples():
+		predictions.append({'date': row.ds, 'mw': row.yhat})
 
-future = m.make_future_dataframe(periods=36, freq='M')
+	return predictions
 
-forecast = m.predict(future)
-print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+@app.get("/")
+async def root():
 
-fig = m.plot(forecast)
+    return map_prediction(model.predict(pd.DataFrame(data={'ds': [datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1)]})))
 
-plt.show()
