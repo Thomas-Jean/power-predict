@@ -12,7 +12,7 @@ inital_data = df[:1095]
 next_year = df[1095:1461]
 
 
-pkl_path = "src/model/dayton_power_model.pkl"
+pkl_path = "model/dayton_power_model.pkl"
 with open(pkl_path, "rb") as file:
     model = pickle.load(file)
 

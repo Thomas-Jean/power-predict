@@ -13,6 +13,6 @@ inital_data = df[:1095]
 model = Prophet()
 model.fit(inital_data)
 
-pkl_path = "src/model/dayton_power_model.pkl"
+pkl_path = "model/dayton_power_model.pkl"
 with open(pkl_path, "wb") as file:
     pickle.dump(model, file)
