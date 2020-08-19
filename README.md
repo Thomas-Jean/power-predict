@@ -20,3 +20,6 @@ one the model is built and pickled
 ```bash
 uvicorn main:app
 ```
+
+### tests
+you can run unit tests with `pytest`
